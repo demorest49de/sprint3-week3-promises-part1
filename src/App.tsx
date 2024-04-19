@@ -3,21 +3,21 @@ import './App.css';
 import './index.Module'
 
 type UserPropsType = {
-    id: number, name: string, friendID: number,
+    id: number, name: string, friendID: number | null,
 }
 
 function App() {
-
-    var findUserInDB = (id: number) => {
+findUserInDB(1)
+    function findUserInDB  (id: number) {
         const users =
             [
                 {id: 1, name: 'Dimych', friendID: 3,},
                 {id: 2, name: 'Sveta', friendID: null},
                 {id: 3, name: 'VALERA', friendID: 2},
             ]
-        const promise = new Promise((resolve, reject) => {
+        const promise: Promise<UserPropsType> = new Promise((resolve, reject) => {
             setTimeout(() => {
-                const user = users.find(user => user.id === id)
+                const user: UserPropsType | undefined = users.find(user => user.id === id)
                 if (user) {
                     resolve(user)
                 } else {
@@ -27,10 +27,11 @@ function App() {
         })
         return promise;
     }
-    const pr = findUserInDB(1)
+    const pr: Promise<UserPropsType> = findUserInDB(1)
     pr.then((user) => {
-        const tUser = user as UserPropsType
-        console.log(tUser.name)
+        // const tUser = user as UserPropsType
+        // console.log(tUser.name)
+        console.log(user.name)
     })
     return (
         <div>
